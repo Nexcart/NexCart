@@ -543,16 +543,17 @@ function processPayment() {
   document.getElementById('s3-payment').textContent = 'Payment via: '+payLabels[payMode];
   document.getElementById('s3-total').textContent = '₹'+cartTotal();
 
-  fetch("https://script.google.com/macros/s/AKfycbw8cHMgbD3YgFF2O4DPk7xvc9AqlaDRmvGIe9glm8dIqs4JIibsevphkJZ6G9KAvmc/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbzw7B8zITQYXkjh-Mc9mHA2ONE1ZmarrUviKNhYLOxtd7hOpHFqkTgwRm9pzS0AOOoPfg/exec", {
     method: "POST",
     body: JSON.stringify({
-      name: fname + " " + lname,
-      phone: phone,
-      address: addr + ", " + city + " - " + pin,
-      product: cart.map(c => c.name).join(", "),
-      total: cartTotal(),
-      payment: payLabels[payMode]
-    })
+  orderId: oid,
+  name: fname + " " + lname,
+  phone: phone,
+  address: addr + ", " + city + " - " + pin,
+  product: cart.map(c => c.name + " x" + c.qty).join(", "),
+  total: cartTotal(),
+  payment: payLabels[payMode]
+})
   });
 
   // Clear cart, move to step 3
